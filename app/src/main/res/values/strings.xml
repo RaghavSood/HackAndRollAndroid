@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">HackAndRoll</string>
     <string name="surprise_me">Surprise Me!</string>
+    <string name="action_about">About</string>
 </resources>
