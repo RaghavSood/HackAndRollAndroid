@@ -2,4 +2,5 @@
     <string name="app_name">HackAndRoll</string>
     <string name="surprise_me">Surprise Me!</string>
     <string name="action_about">About</string>
+    <string name="about">This is my awesome new Android app!</string>
 </resources>
