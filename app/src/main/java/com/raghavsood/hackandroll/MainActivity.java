@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements ImageInterface {
 
     Button surpriseButton;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,23 @@ public class MainActivity extends AppCompatActivity implements ImageInterface {
     }
 
     @Override
-    public void updateImages(Bitmap[] bitmaps) {
-        //TODO Create and update an ImageView
+    public void updateImages(final Bitmap[] bitmaps) {
+        surpriseButton.setEnabled(false); // Disable the button, since we already have the images
+        final ImageView imageView = new ImageView(this);// Create a new ImageView to add to the screen
+        // Get a reference to the root layout
+        RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.root_layout);
+        //Attach the image view to our relative layout
+        rootLayout.addView(imageView, new RelativeLayout.LayoutParams(500, 500));
+        imageView.setImageBitmap(bitmaps[i++]); // Display the first image
+        // Set the on click listener for the image view
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(i>=bitmaps.length) { // Wrap around once we reach the end
+                    i = 0;
+                }
+                imageView.setImageBitmap(bitmaps[i++]); // Display the next image
+            }
+        });
     }
 }
