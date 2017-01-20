@@ -3,7 +3,13 @@ package com.raghavsood.hackandroll;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class SurpriseTask extends AsyncTask<String, Integer, Bitmap[]> {
     public static String TAG = "SurpriseTask";
@@ -51,12 +57,27 @@ public class SurpriseTask extends AsyncTask<String, Integer, Bitmap[]> {
 
     @Override
     protected Bitmap[] doInBackground(String... strings) {
-        return new Bitmap[0];
+        Bitmap bitmaps[] = new Bitmap[urls.length]; // Create array to store the images
+        try {
+            int i=0;
+            for (String url : urls) { // Iterate over all the URLs
+                publishProgress(i+1); // Update the progress dialog
+                // Retrieve the image
+                bitmaps[i] = BitmapFactory.decodeStream((InputStream)new URL(url).getContent());
+                i++;
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmaps;
     }
 
     @Override
     protected void onPostExecute(Bitmap[] bitmaps) {
         super.onPostExecute(bitmaps);
         dialog.dismiss(); // We're done, let's get rid of this
+        imageInterface.updateImages(bitmaps); // Tell the Activity about the images
     }
 }
