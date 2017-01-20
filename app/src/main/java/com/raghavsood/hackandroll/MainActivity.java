@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements ImageInterface {
         surpriseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Button clicked!", Toast.LENGTH_SHORT).show();
+                new SurpriseTask(MainActivity.this, MainActivity.this).execute(new String[]{""});
             }
         });
     }
